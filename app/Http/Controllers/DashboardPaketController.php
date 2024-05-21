@@ -41,8 +41,6 @@ class DashboardPaketController extends Controller
             'keterangan' => 'required'
         ]);
 
-        // dd($validatedData);
-        // return dd($validatedData);
         $paket = paket::create($validatedData);
 
         return redirect('/dashboard')->with('success', 'Paket Berhasil Ditambahkan');
@@ -61,7 +59,11 @@ class DashboardPaketController extends Controller
      */
     public function edit(paket $paket)
     {
-        //
+        return view('dashboard.paket.edit', [
+            'paket' => $paket
+        ]);
+
+      
     }
 
     /**
@@ -69,7 +71,20 @@ class DashboardPaketController extends Controller
      */
     public function update(Request $request, paket $paket)
     {
-        //
+        $validatedData = $request->validate([
+            'pemilik' => 'required',
+            'no_rak' => 'required',
+            'instansi' => 'required',
+            'keterangan' => 'required'
+        ]);
+
+
+        $paket = paket::where('id', $paket -> id)
+            ->update($validatedData);
+        
+
+
+        return redirect('/dashboard')->with('success', 'Paket Berhasil Diedit');
     }
 
     /**

@@ -44,7 +44,7 @@
             <td>{{ $paket->instansi }}</td>
             <td>{{ $paket->keterangan }}</td>
             <td>
-                <a href="" class="badge bg-warning"><i class="bi bi-pencil-square"></i></a>
+                <a href="/dashboard/paket/{{ $paket->id }}/edit" class="badge bg-warning"><i class="bi bi-pencil-square"></i></a>
                 <form action="/dashboard/paket/ {{ $paket->id }}" method="post" class="d-inline">
                     @csrf
                     @method ('delete')
