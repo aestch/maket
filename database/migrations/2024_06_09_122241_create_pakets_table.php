@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('pakets', function (Blueprint $table) {
             $table->id();
-            $table->string('pemilik');
+            $table->foreignId('ekspedisi')->references('id')->on('ekspedisis');
+            $table->string('awb');
+            $table->string('nama');
             $table->string('no_rak');
-            $table->string('instansi');
-            $table->string('keterangan');
+            $table->string('no_telepon');
+            $table->enum('status', ['sudah diambil', 'belum diambil'])->default('belum diambil');
             $table->timestamps();
         });
     }

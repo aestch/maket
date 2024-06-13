@@ -1,4 +1,4 @@
-@extends('dashboard.layouts.main')
+@extends('kurir.dashboard.layouts.main')
 
 @section('container')
 
@@ -24,32 +24,26 @@
 @endif
 
 <div class="table-responsive">
-    <a href="/dashboard/paket/create" role="button" class="btn btn-primary float-right">Tambah Paket Baru</a>
-    <table class="table table-striped table-xl table-hover">
+    <a href="/kurir/dashboard/paket/create" role="button" class="btn btn-primary float-right">Tambah Paket Baru</a>
+    <table class="table table-striped table-bordered align-middle table-xl table-hover">
       <thead>
         <tr>
           <th scope="col">No</th>
-          <th scope="col">Pemilik</th>
-          <th scope="col">Di Rak</th>
+          <th scope="col">Nama</th>
           <th scope="col">Ekspedisi</th>
-          <th scope="col">Keterangan</th>
+          <th scope="col">Di Rak</th>
+          <th scope="col">Status</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="table-group-divider">
         @foreach ( $pakets as $paket)
         <tr>
             <td>{{ $loop->iteration }}</td>
-            <td>{{ $paket->pemilik }}</td>
+            <td>{{ $paket->nama }}</td>
+            <td>{{ $paket->jenis_ekspedisi }}</td>
             <td>{{ $paket->no_rak }}</td>
-            <td>{{ $paket->instansi }}</td>
-            <td>{{ $paket->keterangan }}</td>
-            <td>
-                <a href="/dashboard/paket/{{ $paket->id }}/edit" class="badge bg-warning"><i class="bi bi-pencil-square"></i></a>
-                <form action="/dashboard/paket/ {{ $paket->id }}" method="post" class="d-inline">
-                    @csrf
-                    @method ('delete')
-                    <button class="badge bg-danger border-0 " onclick="return confirm('Yakin Hapus?')"><i class="bi bi-trash3"></i></button>
-                </form>
+            <td class="{{ $paket->status == 'belum diambil' ? 'status-belum-diambil' : 'status-sudah-diambil' }}">
+              {{ $paket->status }}
             </td>
         </tr>    
         @endforeach

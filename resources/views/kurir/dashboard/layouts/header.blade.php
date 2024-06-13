@@ -29,29 +29,23 @@
                 <!-- ============================================================== -->
                 <!-- Search -->
                 <!-- ============================================================== -->
-                <li class="nav-item hidden-xs-down search-box"> <a class="nav-link hidden-sm-down waves-effect waves-dark" href="javascript:void(0)"><i class="ti-search"></i></a>
-                    <form class="app-search">
-                        <input type="text" class="form-control" placeholder="Search & enter"> <a class="srh-btn"><i class="ti-close"></i></a>
-                    </form>
-                </li>
-                <!-- ============================================================== -->
-                <!-- Profile -->
-                <!-- ============================================================== -->
-                <li class="nav-item dropdown">
-                    <div class="dropdown">
-                        <a class="btn btn-secondary dropdown-toggle mx-2 p-2 mt-3" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-circle " > {{ auth()->user()->username }} </i></a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Log-Out</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </div>
-                </li>
                 <li>
-                    <form action="/logout" method="POST">
+                    <nav class="navbar">
+                        <form method="POST" action="{{ route('search.perform') }}" class="search-form">
+                          @csrf
+                          <input class="form-control" style="border: none;" type="search" id="query" name="query" placeholder="Cari Paket Anda disini...." value="{{ isset($query) ? $query : '' }}">
+                          <button type="submit" for="query" class="fa fa-search" id="searchbtn"></button>
+                        </form>
+                      </nav>
+                </li>
+                
+                <li>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
-                        <button type='submit'" class="btn btn-secondary p-2 mt-3">Log-Out <i class="bi bi-box-arrow-right"></i></button>
                     </form>
+                    <a class="btn btn-dark only-icon" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="bi bi-box-arrow-left"></i>
+                        Logout
+                    </a>
                 </li>
             </ul>
         </div>

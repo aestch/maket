@@ -3,31 +3,30 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\kurir;
+use App\Models\ekspedisi;
 use Illuminate\Support\Facades\Auth;
 
-class LoginController extends Controller
+class KurirLoginController extends Controller
 {
     public function index()
     {
-        return view('sekuriti.login.index', [
-            'title' => 'Login',
-            'Users' => User::all()
+        return view('kurir.login.index', [
+            'title' => 'Login'
         ]);
     }
 
-    public function authenticate(Request $request)
+    public function auth_proc(Request $request)
     {
         $credentials = $request->validate([
-            'email' => 'required|email:dns',
+            'nama' => 'required',
             'password' => 'required'
         ]);
 
-
-        if (Auth::guard('web')->attempt($credentials)) {
+        if (Auth::guard('kurir')->attempt($credentials)) {
             $request->session()->regenerate();
- 
-            return redirect()->intended('/sekuriti/dashboard');
+            
+            return redirect()->intended('/kurir/dashboard/paket/create');
         }
 
         return back()->with('loginError', 'Login Failed!');
@@ -36,16 +35,12 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-        
-        Auth::logout();
-
-        // Invalidate the session
+        Auth::guard('kurir')->logout();
+    
         $request->session()->invalidate();
-
-        // Regenerate CSRF token
+    
         $request->session()->regenerateToken();
-
-        // Redirect to the home page or login page
+    
         return redirect('/');
     }
 }

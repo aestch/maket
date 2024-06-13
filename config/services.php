@@ -31,4 +31,9 @@ return [
         ],
     ],
 
+    'binderbyte' => [
+        'url' => env('BINDERBYTE_API_URL'),
+        'key' => env('BINDERBYTE_API_KEY'),
+    ],
+
 ];

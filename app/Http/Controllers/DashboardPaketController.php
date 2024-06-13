@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\paket;
 use App\Models\User;
+use App\Models\ekspedisi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardPaketController extends Controller
 {
@@ -14,8 +16,15 @@ class DashboardPaketController extends Controller
     public function index()
     {
   
-        return view('dashboard.index', [
-            'pakets' => paket::all()
+        $pakets = DB::table('pakets')
+            ->join('ekspedisis', 'pakets.ekspedisi', '=', 'ekspedisis.id')
+            ->select('pakets.*', 'ekspedisis.*')
+            ->orderBy('pakets.created_at', 'desc') // Urutkan berdasarkan kolom created_at secara descending
+            ->get();
+
+        return view('sekuriti.dashboard.index', [
+        'pakets' => $pakets,
+        'Users' => User::all()
         ]);
     }
 
@@ -24,7 +33,7 @@ class DashboardPaketController extends Controller
      */
     public function create()
     {
-        return view('dashboard.paket.create', [
+        return view('sekuriti.dashboard.paket.create', [
         ]);
     }
 
@@ -43,7 +52,7 @@ class DashboardPaketController extends Controller
 
         $paket = paket::create($validatedData);
 
-        return redirect('/dashboard')->with('success', 'Paket Berhasil Ditambahkan');
+        return redirect('/sekuriti/dashboard')->with('success', 'Paket Berhasil Ditambahkan');
     }
 
     /**
@@ -69,9 +78,9 @@ class DashboardPaketController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, paket $paket)
+    public function update(Request $request, paket $paket, $id) 
     {
-        $validatedData = $request->validate([
+         $request->validate([
             'pemilik' => 'required',
             'no_rak' => 'required',
             'instansi' => 'required',
@@ -79,9 +88,14 @@ class DashboardPaketController extends Controller
         ]);
 
 
-        $paket = paket::where('id', $paket -> id)
-            ->update($validatedData);
-        
+        $paket = paket::findOrFail($id);
+
+        $paket->update([
+            'pemilik' => $request->pemilik,
+            'no_rak' => $request->no_rak,
+            'instansi' => $request->instansi,
+            'keterangan' => $request->keterangan
+        ]);
 
 
         return redirect('/dashboard')->with('success', 'Paket Berhasil Diedit');
@@ -102,4 +116,6 @@ class DashboardPaketController extends Controller
 
         return redirect('/dashboard')->with('deleted', 'Paket Berhasil dihapus');
     }
+
+    
 }

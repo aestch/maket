@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+  --orange: #ff7800;
+  --black: #130f40;
+  --light-color: #666;
+  --box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  --border: 2rem solid rgba(0, 0, 0, 0.1);
+  --outline: 0.1rem solid rgba(0, 0, 0, 0.1);
+  --outline-hover: 0.2rem solid var(--black);
+}
+
+* {
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  text-decoration: none;
+  text-transform: capitalize;
+  transition: all 0.2s linear;
+}
+
+
+/* .topbar {
+  padding: 1rem;
+  margin-bottom: 2rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  box-shadow: var(--box-shadow);
+} */
+
+
+
+.topbar .search-form{
+  height: 2.5rem;
+  width: 30rem;
+  line-height: auto;
+  border-radius: 2rem;
+  background: #eee;
+  color: var(--black);
+  font-size: auto;
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+
+}
+
+.topbar .search-form input { 
+  height: 100%;
+  width: 100%;
+  background: #eee ;
+  text-transform: none;
+  font-size: 1rem;
+  color: var(--black);
+  padding: 0 1.5rem;
+  margin: 1rem;
+}
+
+
+.topbar .search-form button {
+  font-size: 1.5rem;
+  padding-right: 1.5rem;
+  color: var(--black);
+  cursor: pointer;
+}
+
+.topbar .only-icon {
+  margin: 0.5em;
+  margin-right: 2rem;
+}
+
+.status-belum-diambil {
+  color: red;
+}
+
+.status-sudah-diambil {
+  color: green;
+}
+
+
+
+
+@media (max-width : 991px){
+  .topbar .search-form{
+    height: 2.5rem;
+    width: 17rem;
+    line-height: auto;
+    border-radius: 2rem;
+    background: #eee;
+    color: var(--black);
+    font-size: auto;
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+  
+  }
+  
+  .topbar .search-form input { 
+    height: 100%;
+    width: 100%;
+    background: #eee ;
+    text-transform: none;
+    font-size: 0.8rem;
+    color: var(--black);
+    padding: 0 1.5rem;
+    margin: 0.8rem;
+  }
+  
+  
+  .topbar .search-form button {
+    font-size: 1.2rem;
+    padding-right: 1.2rem;
+    color: var(--black);
+    cursor: pointer;
+  }
+
+  .topbar .only-icon {
+    margin: 0.5em;
+    margin-right: 2rem;
+  }
+
+}
+
+@media (max-width : 500px) {
+
+  .topbar .search-form{
+    height: 2.1rem;
+    width: 10rem;
+    line-height: auto;
+    border-radius: 1.5rem;
+    background: #eee;
+    color: var(--black);
+    font-size: auto;
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+    
+  }
+  
+  .topbar .search-form input { 
+    height: 100%;
+    width: 100%;
+    background: #eee ;
+    text-transform: none;
+    font-size: 0.8rem;
+    color: var(--black);
+    padding: 0 0.3rem;
+    margin: 0.5rem;
+  }
+  
+  
+  .topbar .search-form button {
+    font-size: 1rem;
+    padding-right: 1rem;
+    color: var(--black);
+    cursor: pointer;
+  }
+
+  .topbar .only-icon {
+    margin-top: 0.4rem;
+    font-size: 0;
+  }
+
+  .topbar .only-icon i {
+    font-size: initial;
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

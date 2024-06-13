@@ -40,6 +40,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'kurir' => [
+            'driver' => 'session',
+            'provider' => 'kurirs',
+        ],
     ],
 
     /*
@@ -63,6 +68,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\User::class),
+        ],
+
+        'kurirs' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', App\Models\kurir::class),
         ],
 
         // 'users' => [

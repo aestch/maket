@@ -9,4 +9,10 @@ class paket extends Model
 {
     use HasFactory;
     protected $guarded = [''];
+
+
+    public function ekspedisi()
+    {
+        return $this->belongsTo(ekspedisi::class, 'ekspedisi');
+    }   
 }

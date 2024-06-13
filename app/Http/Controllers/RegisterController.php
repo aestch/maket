@@ -9,7 +9,7 @@ class RegisterController extends Controller
 {
     public function index()
     {
-        return view('register.index', [
+        return view('sekuriti.register.index', [
             'title' => 'Register',
             'active' => 'register'
 
@@ -29,6 +29,6 @@ class RegisterController extends Controller
 
         $request->session()->flash('success', 'Registration was successfull! Please Login');
 
-        return redirect('/login');
+        return redirect('/sekuriti/login');
     }
 }

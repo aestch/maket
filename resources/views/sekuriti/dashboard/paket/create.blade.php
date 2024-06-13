@@ -1,4 +1,4 @@
-@extends('dashboard.layouts.main')
+@extends('sekuriti.dashboard.layouts.main')
 
 @section('container')
 
@@ -9,7 +9,7 @@
 </div>
 
 <div class="col-lg-8">
-<form method="post" action="/dashboard/paket">
+<form method="post" action="/sekuriti/dashboard/paket">
   @csrf
   @method('POST')
   <div class="mb-3">

@@ -9,7 +9,7 @@
 </div>
 
 <div class="col-lg-8">
-<form method="post" action="/dashboard/paket">
+<form method="post" action="/dashboard/paket/{{ $paket->id }}/edit">
   @method('PUT')
   @csrf
   <div class="mb-3">
