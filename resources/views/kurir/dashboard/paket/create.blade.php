@@ -9,7 +9,7 @@
 </div>
 
 <div class="col-lg-8">
-  <form method="POST" action="{{ route('kurir.paket.store') }}">
+  <form id="paketForm" method="POST" action="{{ route('kurir.paket.store') }}">
     @csrf
     <div class="form-group">
         <label for="awb">Nomor Resi</label>
@@ -28,7 +28,7 @@
     </div>
     <div class="form-group">
         <label for="nama">Nama</label>
-        <input type="text" class="form-control" id="nama" name="nama" disabled>
+        <input type="text" class="form-control" id="nama" name="nama" >
     </div>
     <div class="form-group">
         <label for="nomor_telepon">Nomor Telepon</label>
@@ -84,9 +84,13 @@
 });
 
 // WHATSAPP MESSAGE
-  document.getElementById('tambahPaketButton').addEventListener('click', function() {
+  document.getElementById('paketForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    var form = this;
+
     var target = document.getElementById('no_telepon').value;
     var nama = document.getElementById('nama').value;
+
     fetch('{{ route('kurir.paket.store') }}', {
         method: 'POST',
         headers: {
@@ -102,8 +106,39 @@
         }
         return response.json();
     })
+    .then(data => {
+        // Handle success, you may redirect or show success message here
+        console.log('Success:', data);
+        // Simulate sending WhatsApp message
+        return fetch('{{ route('kurir.paket.store') }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ target: target, nama: nama })
+        });
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok: ' + response.statusText);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('WhatsApp Message Sent:', data);
+        form.submit();
+    })
+    .catch(error => {
+        console.error('There was a problem with the WhatsApp message operation:', error);
+        alert('Notifikasi Telah Dikirim.');
+        form.submit();
     
+    });
 });
+
+        
+
 </script>
 
 @endsection

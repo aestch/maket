@@ -1,10 +1,10 @@
-@extends('sekuriti.dashboard.layouts.main')
+@extends('kurir.dashboard.layouts.main')
 
 @section('container')
 
 <div class="row page-titles">
     <div class="col-md-5 align-self-center">
-        <h3 class="text-themecolor">Daftar Paket</h3>
+        <h3 class="text-themecolor">Daftar Paket yang sudah diambil</h3>
     </div>
 </div>
 
@@ -32,7 +32,6 @@
         <th scope="col">Ekspedisi</th>
         <th scope="col">Di Rak</th>
         <th scope="col">Status</th>
-        <th scope="col">Aksi</th>
       </tr>
     </thead>
     <tbody class="table-group-divider">
@@ -44,18 +43,6 @@
           <td>{{ $paket->no_rak }}</td>
           <td class="{{ $paket->status == 'belum diambil' ? 'status-belum-diambil' : 'status-sudah-diambil' }}">
             {{ $paket->status }}
-          </td>
-          <td>
-            <a href="/sekuriti/dashboard/paket/{{ $paket->id }}/edit" class="btn btn-warning">Edit</a>
-            <a href="/sekuriti/dashboard/paket/{{ $paket->id }}/delete" class="btn btn-danger">Delete</a>
-                  @if($paket->status == 'belum diambil')
-                        <form action="{{ route('sekuriti.paket.updateStatus', $paket->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('PATCH')
-                              <input type="hidden" name="status" value="sudah diambil">
-                              <button type="submit" class="btn btn-success">Sudah Diambil</button>
-                        </form>
-                  @endif
           </td>
       </tr>    
       @endforeach

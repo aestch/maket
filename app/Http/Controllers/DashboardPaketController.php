@@ -18,7 +18,8 @@ class DashboardPaketController extends Controller
   
         $pakets = DB::table('pakets')
             ->join('ekspedisis', 'pakets.ekspedisi', '=', 'ekspedisis.id')
-            ->select('pakets.*', 'ekspedisis.*')
+            ->select('pakets.*', 'ekspedisis.jenis_ekspedisi', 'ekspedisis.courier')
+            ->where('pakets.status', 'belum diambil')
             ->orderBy('pakets.created_at', 'desc') // Urutkan berdasarkan kolom created_at secara descending
             ->get();
 
@@ -26,6 +27,23 @@ class DashboardPaketController extends Controller
         'pakets' => $pakets,
         'Users' => User::all()
         ]);
+    }
+
+    public function histori()
+    {
+        $pakets = DB::table('pakets')
+            ->join('ekspedisis', 'pakets.ekspedisi', '=', 'ekspedisis.id')
+            ->select('pakets.*', 'ekspedisis.jenis_ekspedisi')
+            ->where('pakets.status', 'sudah diambil') // Hanya ambil paket dengan status "sudah diambil"
+            ->orderBy('pakets.created_at', 'desc') // Urutkan berdasarkan kolom created_at secara descending
+            ->get();
+
+        dd($pakets);
+
+        return view('sekuriti.dashboard.paket.histori', [
+            'pakets' => $pakets,
+            'Users' => User::all()
+            ]);
     }
 
     /**
@@ -62,15 +80,25 @@ class DashboardPaketController extends Controller
     {
         //
     }
+    public function updateStatus(Request $request, $id)
+    {
+        $status = $request->input('status');
+        DB::table('pakets')
+            ->where('id', $id)
+            ->update(['status' => $status]);
 
+        return redirect()->back()->with('success', 'Status paket berhasil diubah.');
+    }
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(paket $paket)
-    {
-        return view('dashboard.paket.edit', [
-            'paket' => $paket
-        ]);
+    public function edit($id)
+    {   
+
+        $paket = paket::findOrFail($id);
+        $ekspedisis = ekspedisi::all();
+
+        return view('sekuriti.dashboard.paket.edit', compact('paket', 'ekspedisis'));
 
       
     }
@@ -78,27 +106,21 @@ class DashboardPaketController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, paket $paket, $id) 
+    public function update(Request $request, $id) 
     {
-         $request->validate([
-            'pemilik' => 'required',
-            'no_rak' => 'required',
-            'instansi' => 'required',
-            'keterangan' => 'required'
+        $request->validate([
+            'awb' => 'required|string',
+            'ekspedisi' => 'required',
+            'no_telepon' => 'required',
+            'nama' => 'required|string',
+            'no_rak' => 'required|string',
+            'status' => 'required|string|in:sudah diambil,belum diambil',
         ]);
-
 
         $paket = paket::findOrFail($id);
+        $paket->update($request->all());
 
-        $paket->update([
-            'pemilik' => $request->pemilik,
-            'no_rak' => $request->no_rak,
-            'instansi' => $request->instansi,
-            'keterangan' => $request->keterangan
-        ]);
-
-
-        return redirect('/dashboard')->with('success', 'Paket Berhasil Diedit');
+        return redirect('/sekuriti/dashboard')->with('success', 'paket berhasil diubah.');
     }
 
     /**
@@ -114,7 +136,7 @@ class DashboardPaketController extends Controller
 
         // paket::where('id', $paket)->delete();
 
-        return redirect('/dashboard')->with('deleted', 'Paket Berhasil dihapus');
+        return redirect('/sekuriti/dashboard')->with('deleted', 'Paket Berhasil dihapus');
     }
 
     

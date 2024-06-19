@@ -33,10 +33,10 @@ class HomeSearchController extends Controller
 
     // Query untuk join tabel pakets dan ekspedisis
     $pakets = DB::table('pakets')
-                ->join('ekspedisis', 'pakets.ekspedisi', '=', 'ekspedisis.id')
-                ->select('pakets.*', 'ekspedisis.*')
-                ->orderBy('pakets.created_at', 'desc')
-                ->get();
+            ->join('ekspedisis', 'pakets.ekspedisi', '=', 'ekspedisis.id')
+            ->select('pakets.*', 'ekspedisis.jenis_ekspedisi')
+            ->orderBy('pakets.created_at', 'desc') // Urutkan berdasarkan kolom created_at secara descending
+            ->get();
 
     // Filter hasil join berdasarkan input pencarian
     $results = $pakets->filter(function ($paket) use ($query) {

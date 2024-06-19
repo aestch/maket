@@ -14,10 +14,11 @@ class HomeController extends Controller
     public function index()
     {   
         $pakets = DB::table('pakets')
-                    ->join('ekspedisis', 'pakets.ekspedisi', '=', 'ekspedisis.id')
-                    ->select('pakets.*', 'ekspedisis.*')
-                    ->orderBy('pakets.created_at', 'desc') // Urutkan berdasarkan kolom created_at secara descending
-                    ->get();
+            ->join('ekspedisis', 'pakets.ekspedisi', '=', 'ekspedisis.id')
+            ->select('pakets.*', 'ekspedisis.jenis_ekspedisi', 'ekspedisis.courier')
+            ->where('pakets.status', 'belum diambil')
+            ->orderBy('pakets.created_at', 'desc') // Urutkan berdasarkan kolom created_at secara descending
+            ->get();
 
         return view('home.index', [
             'pakets' => $pakets,
@@ -25,6 +26,19 @@ class HomeController extends Controller
             
         ]);
     }
+
+    public function histori()
+    {
+        $pakets = DB::table('pakets')
+            ->join('ekspedisis', 'pakets.ekspedisi', '=', 'ekspedisis.id')
+            ->select('pakets.*', 'ekspedisis.jenis_ekspedisi')
+            ->where('pakets.status', 'sudah diambil') // Hanya ambil paket dengan status "sudah diambil"
+            ->orderBy('pakets.created_at', 'desc') // Urutkan berdasarkan kolom created_at secara descending
+            ->get();
+
+        return view('home.histori', compact('pakets'));
+    }
+
 
 
 }

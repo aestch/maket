@@ -5,6 +5,7 @@
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
                 <li> <a class="waves-effect waves-dark" href="/home" aria-expanded="false"><i class="bi bi-box-seam"></i><span class="hide-menu">Paket</span></a></li>
+                <li> <a class="waves-effect waves-dark" href="/home/histori" aria-expanded="false"><i class="bi bi-archive"></i><span class="hide-menu">Histori Paket</span></a></li>
             </ul>
            
         </nav>

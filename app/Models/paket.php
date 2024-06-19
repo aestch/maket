@@ -10,6 +10,18 @@ class paket extends Model
     use HasFactory;
     protected $guarded = [''];
 
+    protected $dates = [
+        'created_at',
+        'updated_at',
+    ];
+
+    protected static function booted()
+    {
+        static::updating(function ($paket) {
+            $paket->updated_at = now();
+        });
+    }
+
 
     public function ekspedisi()
     {

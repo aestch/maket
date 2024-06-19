@@ -19,10 +19,11 @@ class KurirPaketController extends Controller
     {
         
         $pakets = DB::table('pakets')
-                    ->join('ekspedisis', 'pakets.ekspedisi', '=', 'ekspedisis.id')
-                    ->select('pakets.*', 'ekspedisis.*')
-                    ->orderBy('pakets.created_at', 'desc') // Urutkan berdasarkan kolom created_at secara descending
-                    ->get();
+            ->join('ekspedisis', 'pakets.ekspedisi', '=', 'ekspedisis.id')
+            ->select('pakets.*', 'ekspedisis.jenis_ekspedisi', 'ekspedisis.courier')
+            ->where('pakets.status', 'belum diambil')
+            ->orderBy('pakets.created_at', 'desc') // Urutkan berdasarkan kolom created_at secara descending
+            ->get();
 
         return view('kurir.dashboard.index', [
             'pakets' => $pakets,
@@ -30,6 +31,8 @@ class KurirPaketController extends Controller
             'Users' => User::all()
         ]);
     }
+
+    
 
     /**
      * Show the form for creating a new resource.
@@ -65,6 +68,7 @@ class KurirPaketController extends Controller
             'no_telepon' => $request->no_telepon,
             'no_rak' => $request->no_rak,
             'status' => $request->status,
+            'updated_at' => now(),
         ]);
 
         $target = $request->input('no_telepon');
@@ -75,7 +79,6 @@ class KurirPaketController extends Controller
             if (empty($nama)) {
                 return response()->json(['status' => 'error', 'message' => 'Namatidak boleh kosong'], 400);
             }
-            
 
             $curl = curl_init();
 
@@ -137,5 +140,17 @@ class KurirPaketController extends Controller
     public function destroy(paket $paket)
     {
         //
+    }
+
+    public function histori()
+    {
+        $pakets = DB::table('pakets')
+            ->join('ekspedisis', 'pakets.ekspedisi', '=', 'ekspedisis.id')
+            ->select('pakets.*', 'ekspedisis.jenis_ekspedisi')
+            ->where('pakets.status', 'sudah diambil') // Hanya ambil paket dengan status "sudah diambil"
+            ->orderBy('pakets.created_at', 'desc') // Urutkan berdasarkan kolom created_at secara descending
+            ->get();
+
+        return view('kurir.dashboard.histori', compact('pakets'));
     }
 }

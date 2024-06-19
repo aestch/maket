@@ -4,7 +4,7 @@
         <!-- Logo -->
         <!-- ============================================================== -->
         <div class="navbar-header">
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="/kurir/dashboard">
                     <img src="/img/logo-maket-panjang.png" alt="homepage" class="dark-logo w-75 " />
              
                 <!--End Logo icon -->

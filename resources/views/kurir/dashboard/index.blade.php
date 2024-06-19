@@ -32,6 +32,7 @@
           <th scope="col">Nama</th>
           <th scope="col">Ekspedisi</th>
           <th scope="col">Di Rak</th>
+          <th scope="col">waktu Datang</th>
           <th scope="col">Status</th>
         </tr>
       </thead>
