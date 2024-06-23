@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ekspedisi extends Model
 {
     use HasFactory; 
-
+    protected $guarded = [''];
     public function kurirs()
     {
         return $this->hasMany(kurir::class);

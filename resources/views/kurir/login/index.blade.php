@@ -147,12 +147,12 @@
     <div class="form-check text-start my-3">
       <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
       <label class="form-check-label" for="flexCheckDefault">
-        Remember me
+        ingat saya
       </label>
     </div>
     <button class="btn btn-primary w-100 py-2" type="submit">Login</button>
   </form>
-  <small>Not Registered? <a href="/kurir/register">Register Now!</a></small>
+  <small>belum punya akun? <a href="/kurir/register">daftar sekarang!</a></small>
   <p class="mt-5 mb-3 text-body-secondary">&copy; Maket-2024</p>
 </main>
 

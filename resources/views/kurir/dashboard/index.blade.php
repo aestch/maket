@@ -43,6 +43,7 @@
             <td>{{ $paket->nama }}</td>
             <td>{{ $paket->jenis_ekspedisi }}</td>
             <td>{{ $paket->no_rak }}</td>
+            <td>{{ $paket->created_at }}</td>
             <td class="{{ $paket->status == 'belum diambil' ? 'status-belum-diambil' : 'status-sudah-diambil' }}">
               {{ $paket->status }}
             </td>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
@@ -18,6 +19,8 @@ class LoginController extends Controller
 
     public function authenticate(Request $request)
     {
+        $remember = $request->has('remember');
+        
         $credentials = $request->validate([
             'email' => 'required|email:dns',
             'password' => 'required'
@@ -29,6 +32,8 @@ class LoginController extends Controller
  
             return redirect()->intended('/sekuriti/dashboard');
         }
+
+        $request->session()->put('email', $request->input('email'));
 
         return back()->with('loginError', 'Login Failed!');
 

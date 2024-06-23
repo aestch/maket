@@ -11,6 +11,7 @@ use App\Http\Controllers\CekResiController;
 use App\Http\Controllers\KurirLoginController;
 use App\Http\Controllers\KurirRegisterController;
 use App\Http\Controllers\KurirPaketController;
+use App\Http\Controllers\EkspedisiController;
 
 
 Route::get('/', function () {
@@ -45,16 +46,24 @@ Route::get('/kurir', function () {
 #SEKURITI
 Route::group(['middleware' => ['auth:web',]], function () {
     Route::post('/sekuriti/logout', [LoginController::class, 'logout']);
+    Route::get('/sekuriti/dashboard', [DashboardPaketController::class, 'index']);
+    Route::get('/sekuriti/dashboard/ekspedisi', [EkspedisiController::class, 'index'])->name('sekuriti.dashboard.ekspedisi');
     Route::resource('/sekuriti/dashboard', DashboardPaketController::class);
     Route::resource('/sekuriti/dashboard/paket', DashboardPaketController::class);
+    Route::resource('/sekuriti/dashboard/ekspedisi', EkspedisiController::class);
+    Route::get('/sekuriti/dashboard/ekspedisi/create', [EkspedisiController::class, 'create'])->name('sekuriti.ekspedisi.create');
+    Route::get('/sekuriti/dashboard/ekspedisi/{id}/edit', [EkspedisiController::class, 'edit'])->name('sekuriti.ekspedisi.edit');
+    Route::get('/sekuriti/dashboard/ekspedisi/{id}/delete', [EkspedisiController::class, 'destroy'])->name('sekuriti.ekspedisi.destroy');
+    Route::PUT('/sekuriti/dashboard/ekspedisi/{id}/edit', [EkspedisiController::class, 'update'])->name('sekuriti.ekspedisi.update');
     Route::get('/sekuriti/dashboard/paket/{id}/edit', [DashboardPaketController::class, 'edit'])->name('sekuriti.paket.edit');
     Route::get('/sekuriti/dashboard/paket/{id}/delete', [DashboardPaketController::class, 'destroy'])->name('sekuriti.paket.destroy');
     Route::PUT('/sekuriti/dashboard/paket/{id}/edit', [DashboardPaketController::class, 'update'])->name('sekuriti.paket.update');
     Route::patch('/sekuriti/dashboard/paket/{id}/edit', [DashboardPaketController::class, 'updateStatus'])->name('sekuriti.paket.updateStatus');
-    Route::get('/sekuriti/dashboard', [DashboardPaketController::class, 'index']);
-    });
-    
     Route::get('/sekuriti/dashboard/paket/histori', [DashboardPaketController::class, 'histori'])->name('sekuriti.paket.histori');
+    
+});
+Route::post('/sekuriti/dashboard/ekspedisi', [EkspedisiController::class, 'store'])->name('sekuriti.ekspedisi.store');
+    
 #KURIR
 Route::group(['middleware' => ['auth:kurir']], function () {
     Route::resource('/kurir/dashboard', KurirPaketController::class );

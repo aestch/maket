@@ -120,12 +120,12 @@
 @endif
 
   <img class="mb-4" src="/img/Logo Maket Putih.png" alt="" width="100" height="100">
-  <h1 class="h3 mb-3 fw-normal">Please Login</h1>
+  <h1 class="h3 mb-3 fw-normal">Masuk</h1>
 
   <form action="{{ route('authenticate.sekuriti') }} " method="POST">
     @csrf
     <div class="form-floating">
-      <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" value="{{ old('email') }}" placeholder="Email@example.com" autofocus required>
+      <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" value="{{ old('email', session('email')) }}" placeholder="example@gmail.com" autofocus required>
       <label for="email">Email</label>
       @error('email')
         <div class="invalid-feedback">
@@ -144,14 +144,14 @@
     </div>
 
     <div class="form-check text-start my-3">
-      <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
-      <label class="form-check-label" for="flexCheckDefault">
-        Remember me
+      <input class="form-check-input" type="checkbox" value="remember-me" id="remember" name="remember">
+      <label class="form-check-label" for="remember">
+        Ingat saya
       </label>
     </div>
     <button class="btn btn-primary w-100 py-2" type="submit">Login</button>
   </form>
-  <small>Not Registered? <a href="/sekuriti/register">Register Now!</a></small>
+
   <p class="mt-5 mb-3 text-body-secondary">&copy; Maket-2024</p>
 </main>
 <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
