@@ -37,9 +37,6 @@ class DashboardPaketController extends Controller
             ->where('pakets.status', 'sudah diambil') // Hanya ambil paket dengan status "sudah diambil"
             ->orderBy('pakets.created_at', 'desc') // Urutkan berdasarkan kolom created_at secara descending
             ->get();
-
-        dd($pakets);
-
         return view('sekuriti.dashboard.paket.histori', [
             'pakets' => $pakets,
             'Users' => User::all()

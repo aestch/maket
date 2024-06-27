@@ -52,6 +52,8 @@ class KurirPaketController extends Controller
      */
     public function store(Request $request)
     {
+
+
         $request->validate([
             'awb' => 'required|string',
             'ekspedisi' => 'required',
@@ -80,6 +82,7 @@ class KurirPaketController extends Controller
                 return response()->json(['status' => 'error', 'message' => 'Namatidak boleh kosong'], 400);
             }
 
+            try {
             $curl = curl_init();
 
             curl_setopt_array($curl, array(
@@ -105,9 +108,14 @@ class KurirPaketController extends Controller
             
             curl_close($curl);
 
-
-
         return redirect()->route('kurir.dashboard.index')->with('success', 'Paket berhasil ditambahkan');
+
+        } catch ( Exception $e ) {
+            return redirect()->route('kurir.dashboard.index')->with('error', 'Paket berhasil ditambahkan, pesan wa tidak terkirim');
+        }
+
+
+
     }
 
     /**
@@ -151,6 +159,6 @@ class KurirPaketController extends Controller
             ->orderBy('pakets.created_at', 'desc') // Urutkan berdasarkan kolom created_at secara descending
             ->get();
 
-        return view('kurir.dashboard.histori', compact('pakets'));
+        return view('kurir.dashboard.paket.histori', compact('pakets'));
     }
 }

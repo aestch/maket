@@ -22,6 +22,8 @@ Route::get('/kurir', function () {
 });
 
 
+Route::get('/sekuriti/dashboard/paket/histori', [DashboardPaketController::class, 'histori'])->name('sekuriti.paket.histori')->middleware('auth:web');
+Route::get('/kurir/dashboard/paket/histori', [KurirPaketController::class, 'histori'])->name('kurir.paket.histori')->middleware('auth:kurir');
 
     Route::get('/home', [HomeController::class, 'index']);
     Route::get('/home/histori', [HomeController::class, 'histori']);
@@ -36,7 +38,7 @@ Route::get('/kurir', function () {
 
 
     #KURIR
-    Route::get('/kurir/login', [KurirLoginController::class, 'index']);
+    Route::get('/kurir/login', [KurirLoginController::class, 'index'])->name('login');
     Route::post('/kurir/login', [KurirLoginController::class, 'auth_proc']);
     Route::get('/kurir/register', [KurirRegisterController::class, 'index']);
     Route::post('/kurir/register', [KurirRegisterController::class, 'store']);
@@ -59,23 +61,20 @@ Route::group(['middleware' => ['auth:web',]], function () {
     Route::get('/sekuriti/dashboard/paket/{id}/delete', [DashboardPaketController::class, 'destroy'])->name('sekuriti.paket.destroy');
     Route::PUT('/sekuriti/dashboard/paket/{id}/edit', [DashboardPaketController::class, 'update'])->name('sekuriti.paket.update');
     Route::patch('/sekuriti/dashboard/paket/{id}/edit', [DashboardPaketController::class, 'updateStatus'])->name('sekuriti.paket.updateStatus');
-    Route::get('/sekuriti/dashboard/paket/histori', [DashboardPaketController::class, 'histori'])->name('sekuriti.paket.histori');
-    
+    Route::post('/sekuriti/dashboard/ekspedisi', [EkspedisiController::class, 'store'])->name('sekuriti.ekspedisi.store');
+
 });
-Route::post('/sekuriti/dashboard/ekspedisi', [EkspedisiController::class, 'store'])->name('sekuriti.ekspedisi.store');
-    
 #KURIR
 Route::group(['middleware' => ['auth:kurir']], function () {
     Route::resource('/kurir/dashboard', KurirPaketController::class );
     Route::resource('/kurir/dashboard/paket', KurirPaketController::class);
     Route::resource('/kurir/dashboard/histori', KurirPaketController::class);
-    });
     Route::get('/kurir/dashboard', [KurirPaketController::class, 'index'])->name('kurir.dashboard.index');
     Route::get('/kurir/dashboard/paket/create', [KurirPaketController::class, 'create'])->name('kurir.paket.create');
     Route::post('/kurir/dashboard/paket', [KurirPaketController::class, 'store'])->name('kurir.paket.store');
-    Route::get('/kurir/dashboard/histori', [KurirPaketController::class, 'histori'])->name('kurir.dashboard.histori');
     Route::get('/kurir/cek-resi', [CekResiController::class, 'track'])->name('kurir.cek-resi');
     Route::post('/kurir/cek-resi', [CekResiController::class, 'track'])->name('kurir.cek-resi');
+    });
 
 Route::resource('/', HomeController::class);
 
